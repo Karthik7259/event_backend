@@ -96,11 +96,25 @@ const adminLogin = async (req, res) => {
     // Logic for admin login
 
 
+ try
+ {
+
+    const {email,password}=req.body;
+    if(email!==process.env.admin_email || password!==process.env.admin_password){
+        return  res.status(200).json({success:false,message:"Invalid admin credentials"});
+    }
+
+    const token=createToken(email); 
+    res.json({success:true,token:token});
+
+ }catch(error){
+    console.log("Error in admin login:",error);
+    res.json({success:false,message:error.message})
+ }
 
 
 
 
-    
 }   
 
 export { loginUser, registerUser ,adminLogin};
