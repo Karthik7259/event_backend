@@ -4,13 +4,14 @@ import productModel from '../models/productModel.js';
 
 const addProduct = async (req, res) => {
    try{
-          const {name,description,price,category,subCategory,sizes,bestseller,colour} =req.body;
+          const {name,description,price,category,subCategory,sizes,bestseller,collegeMerchandise} =req.body;
 
           const image1=req.files.image1 && req.files.image1[0] ;
           const image2=req.files.image2 && req.files.image2[0] ;
           const image3=req.files.image3 && req.files.image3[0] ;
           const image4=req.files.image4 && req.files.image4[0] ;
 
+          console.log("collegeMerchandise:", collegeMerchandise);
 
           const images=[image1,image2,image3,image4].filter((item)=> item !== undefined);
  
@@ -24,7 +25,6 @@ const addProduct = async (req, res) => {
            )
 
 
-           console.log(colour);
           const productData = {
             name,
             description,
@@ -32,7 +32,7 @@ const addProduct = async (req, res) => {
             subCategory,
             sizes,
             bestseller:bestseller === 'true' ? true : false,
-            colour:JSON.parse(colour.replace(/'/g, '"')),
+            collegeMerchandise,
             price:Number(price),
             sizes : JSON.parse(sizes.replace(/'/g, '"')),
             image:imagesUrl,
@@ -74,9 +74,9 @@ const listProducts = async (req, res) => {
 
 const removeProduct = async (req, res) => {
     try{
-
-        await productModel.findByIdAndDelete(req.body.id);
-         res.json({success:true,message:"Product removed"});
+         const products=await productModel.findByIdAndDelete(req.body.id);
+         console.log(products);
+         res.json({success:true,message:"Product removed successfully"});
     }catch(err){  
         console.log(err); 
 
@@ -90,19 +90,7 @@ const removeProduct = async (req, res) => {
 
 const singleProduct=async(req,res)=>{
 
-  try{
-   const {productId}=req.body;
-   console.log(productId);
 
-   const product=await productModel.findById(productId);
-    res.json({success:true,product});
-
-  }catch(err){
-
-    console.log(err); 
-
-    res.status(500).json({error:"Internal server error"})
-  }
 
 }
 

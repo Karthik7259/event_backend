@@ -35,10 +35,11 @@ const productSchema = new mongoose.Schema(
         type:Boolean,
         
       },
-      colour:{
-        type:Array,
+      collegeMerchandise:{   
+        type:String,
         required:true,
       },
+     
       date:{
         type:Number,
         default:Date.now
