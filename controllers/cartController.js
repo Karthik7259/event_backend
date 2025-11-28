@@ -42,6 +42,9 @@ const updateCart = async (req, res) => {
         const userData=await userModel.findById(userId);
         let cartData=userData.cartData;
 
+        if(!cartData[itemId]){
+            cartData[itemId]={};
+        }
 
         cartData[itemId][size]=quantity;    
 

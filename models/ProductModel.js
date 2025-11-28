@@ -15,6 +15,10 @@ const productSchema = new mongoose.Schema(
         type:Number,
         required:true,
       },
+      Mrpprice:{
+        type:Number,
+        required:true,
+      },
       image:{   
         type:Array,
         required:true,
