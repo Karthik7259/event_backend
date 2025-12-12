@@ -141,21 +141,103 @@ const forgotPassword = async (req, res) => {
 
         await user.save();
 
-        // Email message with OTP
+        // Email message with OTP - YourCampus branded template
         const message = `
-            <h1>Password Reset OTP</h1>
-            <p>You requested a password reset. Please use the following OTP to verify your identity:</p>
-            <div style="background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 32px; font-weight: bold; letter-spacing: 5px; margin: 20px 0;">
-                ${otp}
-            </div>
-            <p>This OTP will expire in 10 minutes.</p>
-            <p>If you didn't request this, please ignore this email.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset OTP - Gifts4Corp</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
+    <table role="presentation" style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <td align="center" style="padding: 40px 0;">
+                <table role="presentation" style="width: 600px; border-collapse: collapse; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <!-- Header -->
+                    <tr>
+                        <td style="padding: 40px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); text-align: center;">
+                            <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold;">Gifts4Corp</h1>
+                            <p style="margin: 10px 0 0 0; color: #ffffff; font-size: 14px;">Your Campus Gift Store</p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Content -->
+                    <tr>
+                        <td style="padding: 40px 30px;">
+                            <h2 style="margin: 0 0 20px 0; color: #333333; font-size: 24px; font-weight: bold;">Password Reset Request</h2>
+                            <p style="margin: 0 0 20px 0; color: #666666; font-size: 16px; line-height: 1.5;">
+                                Hello <strong>${user.name}</strong>,
+                            </p>
+                            <p style="margin: 0 0 30px 0; color: #666666; font-size: 16px; line-height: 1.5;">
+                                We received a request to reset your password. Please use the following One-Time Password (OTP) to verify your identity and proceed with resetting your password:
+                            </p>
+                            
+                            <!-- OTP Box -->
+                            <table role="presentation" style="width: 100%; border-collapse: collapse; margin: 0 0 30px 0;">
+                                <tr>
+                                    <td style="padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; text-align: center;">
+                                        <p style="margin: 0 0 10px 0; color: #ffffff; font-size: 14px; font-weight: bold; letter-spacing: 2px;">YOUR OTP CODE</p>
+                                        <p style="margin: 0; color: #ffffff; font-size: 42px; font-weight: bold; letter-spacing: 8px; font-family: 'Courier New', monospace;">
+                                            ${otp}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <!-- Info Box -->
+                            <table role="presentation" style="width: 100%; border-collapse: collapse; margin: 0 0 30px 0;">
+                                <tr>
+                                    <td style="padding: 20px; background-color: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px;">
+                                        <p style="margin: 0; color: #856404; font-size: 14px; line-height: 1.5;">
+                                            <strong>⏱️ Important:</strong> This OTP will expire in <strong>10 minutes</strong> for security reasons.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <p style="margin: 0 0 20px 0; color: #666666; font-size: 16px; line-height: 1.5;">
+                                If you didn't request a password reset, please ignore this email or contact our support team if you have concerns about your account security.
+                            </p>
+                            
+                            <p style="margin: 0; color: #666666; font-size: 16px; line-height: 1.5;">
+                                Best regards,<br>
+                                <strong>The Gifts4Corp Team</strong>
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding: 30px; background-color: #f8f9fa; border-top: 1px solid #e9ecef; text-align: center;">
+                            <p style="margin: 0 0 10px 0; color: #6c757d; font-size: 14px;">
+                                <strong>Contact Us</strong>
+                            </p>
+                            <p style="margin: 0 0 5px 0; color: #6c757d; font-size: 13px;">
+                                📧 Email: <a href="mailto:sales@gifts4corp.com" style="color: #667eea; text-decoration: none;">sales@gifts4corp.com</a>
+                            </p>
+                            <p style="margin: 0 0 15px 0; color: #6c757d; font-size: 13px;">
+                                📱 Phone: <a href="tel:+919620044002" style="color: #667eea; text-decoration: none;">+91-9620044002</a>
+                            </p>
+                            <p style="margin: 0; color: #999999; font-size: 12px; line-height: 1.5;">
+                                © 2025 Gifts4Corp. All rights reserved.<br>
+                                Your Campus Gift Store - Making Every Moment Special
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
         `;
 
         try {
             await sendEmail({
                 sendTo: user.email,
-                subject: 'Password Reset OTP',
+                subject: '🔐 Password Reset OTP - Gifts4Corp',
                 html: message
             });
 
