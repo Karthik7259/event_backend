@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
 async function sendContactMail({ firstName, lastName, phone, email, location, organisation, info }) {
   const transporter = nodemailer.createTransport({
@@ -26,4 +26,4 @@ async function sendContactMail({ firstName, lastName, phone, email, location, or
   return transporter.sendMail(mailOptions);
 }
 
-module.exports = { sendContactMail };
+export { sendContactMail };
