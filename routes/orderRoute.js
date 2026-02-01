@@ -1,29 +1,31 @@
 import express from 'express';
-
-import {placeOrder,placeOrderStripe,placeOrderRazorpay,allOrders,userOrders,updateStatus, verifyRazor, getOrderTracking} from '../controllers/orderController.js';
-import adminAuth from '../middleware/adminAuth.js';
 import authuser from '../middleware/auth.js';
+import adminAuth from '../middleware/adminAuth.js';
+import {
+  createOrder,
+  getUserOrders,
+  getOrderById,
+  getAllOrdersAdmin,
+  getOrderStats,
+  updateOrderStatus,
+  updatePaymentStatus,
+  deleteOrderAdmin,
+} from '../controllers/orderController.js';
 
-const OrderRouter=express.Router();
+const orderRouter = express.Router();
 
-// Admin Features
-OrderRouter.post('/list',adminAuth,allOrders);
-OrderRouter.put('/status',adminAuth,updateStatus);
+// User routes
+orderRouter.post('/create', authuser, createOrder);
+orderRouter.get('/user', authuser, getUserOrders);
 
+// Admin routes
+orderRouter.get('/admin/all', adminAuth, getAllOrdersAdmin);
+orderRouter.get('/admin/stats', adminAuth, getOrderStats);
+orderRouter.put('/admin/status/:id', adminAuth, updateOrderStatus);
+orderRouter.put('/admin/payment/:id', adminAuth, updatePaymentStatus);
+orderRouter.delete('/admin/:id', adminAuth, deleteOrderAdmin);
 
-// payment Features
-OrderRouter.post('/place',authuser,placeOrder);
-OrderRouter.post('/stripe',authuser,placeOrderStripe);
-OrderRouter.post('/razorpay',authuser,placeOrderRazorpay);
+// User route (must be last)
+orderRouter.get('/:id', authuser, getOrderById);
 
-// User Features
-OrderRouter.post('/userorders',authuser,userOrders);
-
-// verify Razorpay payment
-OrderRouter.post('/verifyRazorpay',authuser,verifyRazor);
-
-// Get order tracking
-OrderRouter.get('/tracking/:orderId',authuser,getOrderTracking);
-
-
-export default OrderRouter;
+export default orderRouter;

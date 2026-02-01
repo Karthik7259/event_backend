@@ -5,13 +5,7 @@ import connectDB from './config/mongodb.js';
 import connectCloudinary from './config/cloudinary.js';
 import Userrouter from './routes/userRoute.js';
 import productRouter from './routes/productRoute.js';
-import cartRouter from './routes/cartRoute.js';
-import OrderRouter from './routes/orderRoute.js';
-import collegeMerchandiseRouter from './routes/collegeMerchandiseRoute.js';
-import shiprocketRouter from './routes/shiprocketRoute.js';
-import categoryRouter from './routes/categoryRoute.js';
-
-import contactRouter from './routes/contactRoute.js';
+import orderRouter from './routes/orderRoute.js';
 
 // app initialization
 
@@ -23,7 +17,10 @@ connectCloudinary();
 // middlewares
 app.use(cors({
     origin: [
+        'http://localhost:5173',
+        'http://localhost:8080',
         'http://localhost:5174',
+        'http://localhost:3000',
         'https://yourcampusmerch.com',
         'https://gift4corp-admin.vercel.app'
     ],
@@ -37,17 +34,9 @@ app.use(express.urlencoded({ extended: true }));
 // Use user routes
 app.use('/api/user', Userrouter);
 app.use('/api/product',productRouter);
-app.use('/api/cart',cartRouter);
-app.use('/api/order',OrderRouter);
-app.use('/api/college-merchandise',collegeMerchandiseRouter);
-app.use('/api/shipping',shiprocketRouter); // Changed from /api/shiprocket to avoid blocking
-app.use('/api/category',categoryRouter);
-
-// Contact form route
+app.use('/api/order',orderRouter);
 
 // api  endpoints
-
-app.use('/api/contact', contactRouter);
 
 
 

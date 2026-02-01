@@ -1,49 +1,111 @@
 import mongoose from "mongoose";
 
-
 const productSchema = new mongoose.Schema(
     {
+      // Basic Information
       name:{
         type:String,
         required:true,
       },
-        description:{   
+      description:{   
         type:String,
         required:true,
       },
-      price:{
+      
+      // Rental Pricing (pricePerDay is main rental price)
+      pricePerDay:{
         type:Number,
         required:true,
+      },
+      
+      // Legacy pricing fields (for backward compatibility)
+      price:{
+        type:Number,
       },
       Mrpprice:{
         type:Number,
-        required:true,
       },
+      
+      // Images
       image:{   
         type:Array,
-        required:true,
+        default:[],
       },
-       category:{
+      images:{   
+        type:Array,
+        default:[],
+      },
+      
+      // Category (for rental: Catering, Decoration, Sound & Lighting, Furniture, Photography, Other)
+      category:{
         type:String,
         required:true,
       },
       subCategory:{   
         type:String,
-        required:true,
       },
+      
+      // Rental-specific fields
+      features:{
+        type:Array,
+        default:[],
+      },
+      specifications:{
+        type:String,
+      },
+      minimumRentalDays:{
+        type:Number,
+        default:1,
+      },
+      depositAmount:{
+        type:Number,
+        default:0,
+      },
+      
+      // Inventory Management
+      quantity:{
+        type:Number,
+        default:0,
+      },
+      availableQuantity:{
+        type:Number,
+        default:0,
+      },
+      
+      // Availability Status
+      isAvailable:{
+        type:Boolean,
+        default:true,
+      },
+      
+      // Rating & Reviews
+      rating:{
+        type:Number,
+        default:4.5,
+      },
+      reviews:{
+        type:Array,
+        default:[],
+      },
+      
+      // Tags for search and filtering
+      tags:{
+        type:Array,
+        default:[],
+      },
+      
+      // Size variants (for products with multiple sizes)
       sizes:{   
         type:Array,
-        required:true,
+        default:[],
       },
       sizeVariants:{
         type: Array,
         default: [],
         // Each element: { size: String, price: Number, mrpPrice: Number, quantity: Number }
       },
-      quantity:{
-        type:Number,
-        default:0,
-      },
+      
+      // Additional attributes
       color:{
         type:String,
       },
@@ -52,11 +114,15 @@ const productSchema = new mongoose.Schema(
       },
       bestseller:{   
         type:Boolean,
+        default:false,
       },
+      
+      // Legacy field (for backward compatibility)
       collegeMerchandise:{   
         type:String,
-        required:true,
       },
+      
+      // Shipping dimensions (for logistics)
       weight:{
         type:Number,
         default:400,
@@ -73,15 +139,14 @@ const productSchema = new mongoose.Schema(
         type:Number,
         default:2,
       },
+      
+      // Timestamps
       date:{
         type:Number,
         default:Date.now
       }
-      
     })
 
-
 const ProductModel = mongoose.models.product || mongoose.model("products",productSchema)
-    
     
 export default ProductModel;
