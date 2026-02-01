@@ -44,9 +44,11 @@ app.use('/api/shipping',shiprocketRouter); // Changed from /api/shiprocket to av
 app.use('/api/category',categoryRouter);
 
 // Contact form route
-app.use('/api/contact', contactRouter);
 
 // api  endpoints
+
+app.use('/api/contact', contactRouter);
+
 
 
 app.get('/',(req,res)=>{
