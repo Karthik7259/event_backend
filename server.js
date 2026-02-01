@@ -17,12 +17,9 @@ connectCloudinary();
 // middlewares
 app.use(cors({
     origin: [
-        'http://localhost:5173',
-        'http://localhost:8080',
-        'http://localhost:5174',
-        'http://localhost:3000',
         'https://yourcampusmerch.com',
-        'https://gift4corp-admin.vercel.app'
+        'https://gift4corp-admin.vercel.app',
+        'https://eventmanagment-3rw4.onrender.com'
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
